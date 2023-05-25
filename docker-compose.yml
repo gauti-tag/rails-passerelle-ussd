@@ -2,14 +2,14 @@ version: "3"
 
 services:
   web:
-    image: ngser/ussd_vignette:latest
-    container_name: ussd_vignette
+    image: ngser/ussd_redevance:latest
+    container_name: ussd_redevance
     build: .
     depends_on:
       - database
       - redis
     ports:
-      - "9000:3000"
+      - "9002:3000"
     volumes:
       - .:/home/ngser/app
     env_file:
@@ -22,7 +22,7 @@ services:
     image: postgres:13.2-alpine
     restart: always
     ports:
-      - "9001:5432"
+      - "9003:5432"
     volumes:
       - "${APPLICATION_DATA_REPOSITORY_LINK}:/var/lib/postgresql/data"
     environment:
