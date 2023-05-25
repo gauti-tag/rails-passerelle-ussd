@@ -84,6 +84,9 @@ GEM
       reline (>= 0.3.1)
     debug_inspector (1.1.0)
     erubi (1.12.0)
+    ethon (0.16.0)
+      ffi (>= 1.15.0)
+    ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -155,6 +158,8 @@ GEM
       io-console (~> 0.5)
     thor (1.2.1)
     timeout (0.3.2)
+    typhoeus (1.4.0)
+      ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.5)
@@ -174,6 +179,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   redis (~> 4.0)
+  typhoeus (~> 1.4)
   tzinfo-data
 
 RUBY VERSION
