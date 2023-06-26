@@ -35,23 +35,25 @@ class MtnController < ApplicationController
           payment_data = {}
           payment_data[:msisdn] = current_session[:msisdn]
           payment_data[:transaction_type] = current_session[:transaction_type]
-          payment_data[:amount] = current_session[:amount].to_f + current_session[:fees].to_f
+          payment_data[:amount] = current_session[:save_amount].to_f
           payment_data[:currency] = 'GNF'
           payment_data[:wallet] = 'mtn_guinee'
           payment_data[:payload] = {
 
-            description: 'USSD GUINÉE VIGNETTE',
-            transaction_fees: current_session[:fees].to_f,
-            operation_type: current_session[:operation_type]
+            description: 'USSD REDEVANCE INFORMATIQUE GUINEE CONAKRY',
+            declarant_code: current_session[:save_code],
+            ticket_number: current_session[:ticket_number]
           }
 
           Rails.logger.debug(payment_data)
           #payment_mtn = PaymentProcessor.call(params: payment_data)
+          payment = Payment::Process.call(payment_data)
           response.set_header("charge", 'Y')
           response.set_header("amount", payment_data[:amount].to_i)
           response.set_header("cpRefId", current_session[:transaction_id])
           free_flow = 'FB'
-          view_text = payment_mtn.response['status'] != 200 ?  payment_error : data[:text]
+          view_text = payment.response['status'] != 200 ?  payment_error : data[:text]
+          SessionManager.delete_session(session_id)
         end
         response.set_header("Freeflow", free_flow)
         render plain: view_text
